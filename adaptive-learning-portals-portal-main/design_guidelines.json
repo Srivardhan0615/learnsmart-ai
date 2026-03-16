@@ -1,0 +1,113 @@
+{
+  "identity": {
+    "name": "LearnSmart AI",
+    "tone": "Futuristic, Intelligent, Focused, Adaptive",
+    "theme_mode": "dark"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Space Grotesk, sans-serif",
+      "body": "Manrope, sans-serif",
+      "code": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-6xl md:text-7xl font-bold tracking-tight",
+      "h2": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-semibold",
+      "body": "text-base md:text-lg leading-relaxed text-slate-300"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "background": "#020617",
+      "foreground": "#f8fafc",
+      "primary": {
+        "DEFAULT": "#7c3aed",
+        "gradient": "from-violet-600 via-indigo-600 to-blue-600",
+        "glow": "0 0 20px rgba(124, 58, 237, 0.5)"
+      },
+      "secondary": {
+        "DEFAULT": "#10b981",
+        "foreground": "#022c22"
+      },
+      "accent": {
+        "cyan": "#06b6d4",
+        "pink": "#ec4899",
+        "purple": "#8b5cf6"
+      },
+      "glass": {
+        "card": "bg-white/[0.03] backdrop-blur-xl border-white/[0.08]",
+        "card_hover": "hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300",
+        "input": "bg-slate-950/50 border-white/10 focus:border-violet-500/50 focus:ring-violet-500/20"
+      }
+    }
+  },
+  "visual_enhancers": {
+    "aurora_background": {
+      "instruction": "Implement a background with 3-4 large colored blobs (violet, blue, emerald) using absolute positioning, 'filter: blur(120px)', and CSS keyframe animations to move them slowly. Overlay a noise texture if possible.",
+      "colors": ["#7c3aed", "#2563eb", "#10b981"]
+    },
+    "splash_cursor": {
+      "instruction": "Create a custom cursor component using Framer Motion or Canvas. It should leave a trailing 'splash' or 'glow' effect. If using 'react-bits', search for the specific implementation code. Otherwise, a simple 'spring' follow cursor with a trailing opacity decay works."
+    },
+    "glassmorphism": {
+      "rules": "Use 'backdrop-blur-xl' heavily. Borders must be 1px and semi-transparent (white/10). Shadows should be colored glow rather than black shadows."
+    }
+  },
+  "layout_strategies": {
+    "landing": "Hero with Aurora Background + Centered High-Impact Text. Features in a Bento Grid (Tetris Mode).",
+    "dashboard": "Sidebar navigation (Glass). Main content in a Masonry or High-Density Grid. Charts in glass containers.",
+    "study_mode": "Zen Mode. Center column max-w-3xl. Distraction-free. Text-heavy but with generous line-height."
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] rounded-full px-8 py-3 font-semibold transition-all hover:scale-105 active:scale-95",
+      "secondary": "bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/10 rounded-full px-6 py-2 transition-all"
+    },
+    "cards": "rounded-2xl border border-white/10 bg-slate-950/40 backdrop-blur-md shadow-xl",
+    "inputs": "bg-slate-900/50 border-slate-800 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 rounded-xl h-12 px-4"
+  },
+  "image_urls": {
+    "hero": {
+      "url": "https://images.unsplash.com/photo-1632893037506-aac33bf18107?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHN0dWRlbnQlMjBsZWFybmluZyUyMG9uJTIwbGFwdG9wJTIwYXQlMjBuaWdodCUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NzM2NjYzNzF8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Student focused on laptop in dark ambient room",
+      "category": "hero"
+    },
+    "features": [
+      {
+        "url": "https://images.unsplash.com/photo-1749006590324-d6b2e90ab1c0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHw0fHxmdXR1cmlzdGljJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMGFic3RyYWN0JTIwbmV0d29ya3xlbnwwfHx8fDE3NzM2NjYzNTh8MA&ixlib=rb-4.1.0&q=85",
+        "description": "AI Chip / Neural Network Abstract",
+        "category": "feature_ai"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1575388902449-6bca946ad549?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBleGFtJTIwaW50ZXJmYWNlJTIwY29tcHV0ZXIlMjBzY3JlZW4lMjBmdXR1cmlzdGljfGVufDB8fHx8MTc3MzY2NjM3MXww&ixlib=rb-4.1.0&q=85",
+        "description": "Data Analytics Screen",
+        "category": "feature_analytics"
+      }
+    ],
+    "avatars": [
+      "https://images.unsplash.com/photo-1614428288016-c465361c421d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwzfHxoYXBweSUyMHN0dWRlbnQlMjBsZWFybmluZyUyMG9uJTIwbGFwdG9wJTIwYXQlMjBuaWdodCUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NzM2NjYzNzF8MA&ixlib=rb-4.1.0&q=85"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "INSTALLATION: Run 'yarn add framer-motion clsx tailwind-merge lucide-react recharts' if not installed.",
+    "SETUP: In 'tailwind.config.js', ensure 'darkMode: class' is set. Add 'Space Grotesk' and 'Manrope' to font family config.",
+    "GLOBAL STYLES: In 'index.css', add the Google Fonts import. Set 'body' background to '#020617' and text to '#f8fafc'.",
+    "AURORA BG: Create 'components/ui/AuroraBackground.js'. Use 3 absolute div blobs with 'filter: blur(100px)' and 'animate-pulse' or custom keyframes to move them around. Colors: Violet, Blue, Emerald.",
+    "SPLASH CURSOR: Create 'components/ui/SplashCursor.js'. Use a simple useEffect to track 'mousemove' and render a fixed 'div' that follows the cursor with a spring animation (using framer-motion). Add a 'mix-blend-mode: screen' or 'overlay' for the glow effect.",
+    "GLASS CARD: Create a reusable '<GlassCard>' component that applies the glassmorphism utility classes defined in 'colors.glass.card'. Use this for ALL containers (Test questions, Dashboard widgets, Feature blocks).",
+    "CHARTS: Use 'recharts' for the Analytics dashboard. Style them with a custom 'Tooltip' that uses the GlassCard style.",
+    "ROUTING: Ensure 'react-router-dom' is set up for /login, /dashboard, /exam, /topics, /study/:topicId.",
+    "TESTING: Add 'data-testid' to all buttons, inputs, and major containers."
+  ],
+  "universal_guidelines": [
+    "Do not use gradients for dark colors. Use solid dark colors with subtle borders.",
+    "Avoid 'transition: all'. Animate specific properties (opacity, transform, background-color).",
+    "Ensure all text has sufficient contrast (APCA/WCAG AA).",
+    "Use 'sonner' for toast notifications.",
+    "Use 'lucide-react' for icons."
+  ]
+}
