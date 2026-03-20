@@ -9,7 +9,7 @@ import json
 import uuid
 import random
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict, EmailStr
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone, timedelta
 import bcrypt
@@ -20,12 +20,10 @@ from supabase import create_client, Client
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# ── Supabase ──────────────────────────────────────────────────────────────────
 SUPABASE_URL = os.environ['SUPABASE_URL']
 SUPABASE_SERVICE_KEY = os.environ['SUPABASE_SERVICE_KEY']
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-# ── App setup ─────────────────────────────────────────────────────────────────
 app = FastAPI(title="LearnSmart AI")
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer()
@@ -33,25 +31,22 @@ security = HTTPBearer()
 JWT_SECRET = os.environ.get('JWT_SECRET', 'learnsmart_ai_secret_change_me')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ── Pydantic models ───────────────────────────────────────────────────────────
+# ── Models (pydantic v1 syntax) ───────────────────────────────────────────────
 
 class UserSignup(BaseModel):
     name: str
-    email: EmailStr
+    email: str
     password: str
     role: str = "student"
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
-class Topic(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+class TopicCreate(BaseModel):
     title: str
     description: str
     content: str
@@ -103,7 +98,6 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 # ── Gemini helper ─────────────────────────────────────────────────────────────
 
 async def call_gemini(prompt: str) -> str:
-    """Call Gemini 1.5 Flash directly via REST API."""
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
@@ -174,11 +168,12 @@ async def get_topic(topic_id: str):
     return result.data[0]
 
 @api_router.post("/topics")
-async def create_topic(topic: Topic, current_user: dict = Depends(get_current_user)):
+async def create_topic(topic: TopicCreate, current_user: dict = Depends(get_current_user)):
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Admin access required")
-    supabase.table("topics").insert(topic.model_dump()).execute()
-    return topic
+    doc = {**topic.dict(), "id": str(uuid.uuid4())}
+    supabase.table("topics").insert(doc).execute()
+    return doc
 
 # Questions
 @api_router.get("/questions/{topic_id}")
@@ -192,7 +187,7 @@ async def get_questions_by_topic(topic_id: str, difficulty: Optional[str] = None
 async def create_question(question: QuestionCreate, current_user: dict = Depends(get_current_user)):
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Admin access required")
-    doc = {**question.model_dump(), "id": str(uuid.uuid4())}
+    doc = {**question.dict(), "id": str(uuid.uuid4())}
     supabase.table("questions").insert(doc).execute()
     return doc
 
@@ -269,7 +264,6 @@ async def get_ai_analysis(attempt_id: str, current_user: dict = Depends(get_curr
         raise HTTPException(status_code=404, detail="Attempt not found")
     attempt = attempt_res.data[0]
 
-    # Return cached
     existing = supabase.table("analyses").select("*").eq("attempt_id", attempt_id).execute()
     if existing.data:
         return existing.data[0]
@@ -325,10 +319,10 @@ Respond ONLY with this exact JSON structure, no markdown or extra text:
             "strengths": ["Completed the exam", "Showed persistence"],
             "weak_areas": list(attempt["difficulty_stats"].keys()),
             "concept_gaps": ["Review incorrect questions"],
-            "mistake_analysis": f"You got {len(incorrect)} questions wrong. Focus on reviewing these concepts.",
-            "learning_insights": "Continue practicing to improve your accuracy.",
-            "recommendations": ["Review study material", "Practice more questions", "Focus on weak areas"],
-            "personalized_content": "Keep practicing and reviewing concepts to improve.",
+            "mistake_analysis": f"You got {len(incorrect)} questions wrong.",
+            "learning_insights": "Continue practicing to improve.",
+            "recommendations": ["Review study material", "Practice more", "Focus on weak areas"],
+            "personalized_content": "Keep practicing to improve.",
             "created_at": datetime.now(timezone.utc).isoformat()
         }
         supabase.table("analyses").insert(fallback).execute()
@@ -385,7 +379,6 @@ async def get_admin_analytics(current_user: dict = Depends(get_current_user)):
         "total_questions": len(supabase.table("questions").select("id").execute().data)
     }
 
-# ── Middleware ────────────────────────────────────────────────────────────────
 app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
