@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 const API = `${BACKEND_URL}/api`;
 
 const getAuthHeader = () => {
@@ -24,6 +24,10 @@ export const questionsAPI = {
 
 export const examAPI = {
   submit: (data) => axios.post(`${API}/exam/submit`, data, { headers: getAuthHeader() })
+};
+
+export const attemptsAPI = {
+  get: (attemptId) => axios.get(`${API}/attempts/${attemptId}`, { headers: getAuthHeader() })
 };
 
 export const analysisAPI = {
