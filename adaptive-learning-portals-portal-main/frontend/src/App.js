@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
-import SplashCursor from '@/components/SplashCursor';
-import Landing from '@/pages/Landing';
-import Login from '@/pages/Login';
-import Signup from '@/pages/Signup';
-import Dashboard from '@/pages/Dashboard';
-import Topics from '@/pages/Topics';
-import Study from '@/pages/Study';
-import Exam from '@/pages/Exam';
-import Results from '@/pages/Results';
-import '@/App.css';
+import SplashCursor from './components/SplashCursor';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import Topics from './pages/Topics';
+import Study from './pages/Study';
+import Exam from './pages/Exam';
+import Results from './pages/Results';
+import './App.css';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
